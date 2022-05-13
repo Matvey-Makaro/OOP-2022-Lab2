@@ -1,6 +1,7 @@
 #pragma once
 
 #include "paintscene.h"
+#include "globparams.h"
 
 #include <QWidget>
 #include <QGraphicsScene>
@@ -18,6 +19,10 @@ public:
     ~Paint();
 
 private:
+    void initUi();
+
+private:
     PaintScene* scene;
     QGraphicsView* view;
+    GlobParams* params;
 };

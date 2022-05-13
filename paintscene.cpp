@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-PaintScene::PaintScene(qreal x, qreal y, qreal width, qreal height, QObject *parent) :
-    QGraphicsScene(x, y, width, height, parent)
+PaintScene::PaintScene(qreal x, qreal y, qreal width, qreal height, GlobParams *globParams, QObject *parent) :
+    QGraphicsScene(x, y, width, height, parent), globParams(globParams)
 {
 
 }

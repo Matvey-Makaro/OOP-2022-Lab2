@@ -9,6 +9,7 @@
 #include <QGraphicsItem>
 #include <QAbstractGraphicsShapeItem>
 #include <QGraphicsRectItem>
+#include <QTimer>
 
 class Paint : public QWidget
 {
@@ -20,9 +21,14 @@ public:
 
 private:
     void initUi();
+    void resizeEvent(QResizeEvent * event);
+
+private slots:
+    void timerSlot();
 
 private:
     PaintScene* scene;
     QGraphicsView* view;
-    GlobParams* params;
+    GlobParams* globParams;
+    QTimer *timer;
 };

@@ -14,11 +14,6 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 }
 
-std::shared_ptr<Shape> Line::clone() const
-{
-    return std::make_shared<Line>();
-}
-
 QRectF Line::getBoundingRect() const
 {
     //qreal length = sqrt((startPoint.x() - endPoint.x()) * (startPoint.x() - endPoint.x()) + (startPoint.y() - endPoint.y()) * (startPoint.y() - endPoint.y()));

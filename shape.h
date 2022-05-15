@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <memory>
+#include <vector>
 
 class Shape : public QObject, public QGraphicsItem
 {
@@ -15,7 +16,7 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) = 0;
     virtual QRectF boundingRect() const override;
     virtual QString getName() const = 0;
-    virtual std::shared_ptr<Shape> clone() const = 0;
+    virtual bool isDrawnInTwoClicks() const = 0;
 
     QPointF getStartPoint() const;
     void setStartPoint(const QPointF& value);
@@ -33,6 +34,13 @@ public:
     int getPenWidth() const;
     void setPenWidth(int value);
 
+    std::vector<QPointF>& getPoints();
+    void addPoint(QPointF point);
+
+
+    bool getIsCompleted() const;
+    void setIsCompleted(bool value);
+
 protected:
     void updateShape();
     virtual QRectF getBoundingRect() const = 0;
@@ -43,6 +51,8 @@ protected:
     QColor penColor = "white";
     QColor brushColor = "black";
     int penWidth = 5;
+    std::vector<QPointF> points;
+    bool isCompleted = false;
 //    bool brushFlag;
 //    int id; //Unused
 };

@@ -1,6 +1,7 @@
 #include "paint.h"
 #include "line.h"
 #include "rectangle.h"
+#include "polygon.h"
 
 #include <QGridLayout>
 #include <QtWidgets>
@@ -8,7 +9,8 @@
 #include <memory>
 
 Paint::Paint(QWidget *parent)
-    : globParams(new GlobParams()), shapesCreator(new ShapesCreator("./shapes/")), QWidget(parent)
+    : globParams(new GlobParams()), shapesCreator(new ShapesCreator("./shapes/")),
+      shapesNames(shapesCreator->getAllShapesNames()), QWidget(parent)
 {
     globParams->setDrawAction();
     initUi();
@@ -20,8 +22,8 @@ Paint::~Paint()
 
 void Paint::initUi()
 {
-    resize(520, 480);
-    //setFixedSize(520, 480);
+    //resize(520, 480);
+    setFixedSize(520, 480);
     //scene = new PaintScene(0, 0, 510, 470, globParams, this);
     scene = new PaintScene(globParams, shapesCreator);
     view = new QGraphicsView(scene);
@@ -38,7 +40,7 @@ void Paint::initUi()
     globParams->setCurrentPenWidth(5);
     //scene->setShapeToDraw(std::make_shared<Line>());
     //scene->setShapeToDraw(std::make_shared<Rectangle>());
-    scene->setShapeToDraw("line");
+    scene->setShapeToDraw("polygon");
 
     QSlider *lineWidth = new QSlider(Qt::Horizontal, this);
     lineWidth->setRange(0, 10);
@@ -64,7 +66,7 @@ void Paint::initUi()
 
     QPushButton* lineBtn = new QPushButton("Line");
     QComboBox *shapesList = new QComboBox(this);
-    shapesNames << "line" << "square";
+    //shapesNames << "line" << "square";    //Delete
     shapesList->addItems(shapesNames);
     connect(shapesList, &QComboBox::currentTextChanged, this, &Paint::updateCurrentShape);
 
@@ -98,4 +100,5 @@ void Paint::updateLineWidth(int value)
 void Paint::updateCurrentShape(QString currShape)
 {
     qDebug() << "Update current shape. New shape: " << currShape << '\n';
+    scene->setShapeToDraw(currShape);
 }

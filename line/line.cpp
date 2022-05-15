@@ -10,11 +10,6 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
     Q_UNUSED(widget)
 }
 
-std::shared_ptr<Shape> Line::clone() const
-{
-    return std::make_shared<Line>();
-}
-
 QRectF Line::getBoundingRect() const
 {
     return QRectF((startPoint.x() > endPoint.x() ? endPoint.x() : startPoint.x()) - penWidth / 2,

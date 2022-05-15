@@ -37,6 +37,6 @@ private:
     PaintScene* scene;  // add delete scene
     QGraphicsView* view;    //add delete view
     GlobParams* globParams;
-    QStringList shapesNames;
     ShapesCreator* shapesCreator;   //add delete shapesCreator
+    QStringList shapesNames;
 };

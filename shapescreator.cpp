@@ -33,7 +33,8 @@ ShapesCreator::ShapesCreator(const std::string& shapesDirPath)
         Shape *exampleShape = create();
 
         shapes[exampleShape->getName().toStdString()] = create;
-        shapesNames.push_back(exampleShape->getName().toStdString());
+        //shapesNames.push_back(exampleShape->getName().toStdString());
+        shapesNames << exampleShape->getName();
 
         delete exampleShape;
     }

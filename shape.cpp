@@ -38,6 +38,16 @@ void Shape::updateShape()
     update(getBoundingRect());
 }
 
+bool Shape::getIsCompleted() const
+{
+    return isCompleted;
+}
+
+void Shape::setIsCompleted(bool value)
+{
+    isCompleted = value;
+}
+
 int Shape::getPenWidth() const
 {
     return penWidth;
@@ -46,6 +56,16 @@ int Shape::getPenWidth() const
 void Shape::setPenWidth(int value)
 {
     penWidth = value;
+}
+
+std::vector<QPointF>& Shape::getPoints()
+{
+    return points;
+}
+
+void Shape::addPoint(QPointF point)
+{
+    points.push_back(point);
 }
 
 QColor Shape::getBrushColor() const

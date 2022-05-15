@@ -17,12 +17,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     globparams.cpp \
-    line.cpp \
     main.cpp \
     paint.cpp \
     paintscene.cpp \
-    polygon.cpp \
-    rectangle.cpp \
     shape.cpp \
     shapescreator.cpp \
     shapeslistserializer.cpp
@@ -30,11 +27,8 @@ SOURCES += \
 HEADERS += \
     globparams.h \
     json.hpp \
-    line.h \
     paint.h \
     paintscene.h \
-    polygon.h \
-    rectangle.h \
     shape.h \
     shapescreator.h \
     shapeslistserializer.h

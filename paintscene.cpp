@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-PaintScene::PaintScene(GlobParams *globParams) :
-    globParams(globParams)
+PaintScene::PaintScene(GlobParams *globParams, ShapesCreator* shapesCreator) :
+    globParams(globParams), shapesCreator(shapesCreator)
 {
 
 }
@@ -52,15 +52,16 @@ void PaintScene::mousePressEvent(QGraphicsSceneMouseEvent * event)
     if(globParams->isDrawAction())
     {
         qDebug() << "Mouse press event event->pos(): " << event->pos();
-        tmpShape = shapeToDraw->clone();
+        //tmpShape = shapeToDraw->clone();
         //tmpShape->setPos(event->pos());
+        tmpShape = shapesCreator->createShape(shapeToDraw.toStdString());
         tmpShape->setStartPoint(event->scenePos());
         tmpShape ->setEndPoint(event->scenePos());
         tmpShape->setPenColor(globParams->getCurrentPenColor());
         tmpShape->setBrushColor(globParams->getCurrentBrushColor());
         tmpShape->setPenWidth(globParams->getCurrentPenWidth());
-        addItem(tmpShape.get());
-        undoList.push_back(tmpShape.get());
+        addItem(tmpShape);
+        undoList.push_back(tmpShape);
         update(0, 0, width(), height());
         qDebug() << tmpShape->getName() << '\n';
     }

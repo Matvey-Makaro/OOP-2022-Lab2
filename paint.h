@@ -2,6 +2,7 @@
 
 #include "paintscene.h"
 #include "globparams.h"
+#include "shapescreator.h"
 
 #include <QWidget>
 #include <QGraphicsScene>
@@ -9,9 +10,9 @@
 #include <QGraphicsItem>
 #include <QAbstractGraphicsShapeItem>
 #include <QGraphicsRectItem>
-#include <QTimer>
 #include <QString>
 #include <QStringList>
+#include <memory>
 
 class Paint : public QWidget
 {
@@ -32,13 +33,10 @@ protected slots:
     void selectBrushColor() { globParams->setCurrentBrushColor(getColorFromUser()); }
     void updateCurrentShape(QString currShape);
 
-private slots:
-    //void timerSlot();   // UNUSED
-
 private:
-    PaintScene* scene;
-    QGraphicsView* view;
+    PaintScene* scene;  // add delete scene
+    QGraphicsView* view;    //add delete view
     GlobParams* globParams;
-    QTimer *timer;  // UNUSED
     QStringList shapesNames;
+    ShapesCreator* shapesCreator;   //add delete shapesCreator
 };

@@ -8,7 +8,7 @@
 #include <memory>
 
 Paint::Paint(QWidget *parent)
-    : globParams(new GlobParams()), QWidget(parent)
+    : globParams(new GlobParams()), shapesCreator(new ShapesCreator("./shapes/")), QWidget(parent)
 {
     globParams->setDrawAction();
     initUi();
@@ -23,7 +23,7 @@ void Paint::initUi()
     resize(520, 480);
     //setFixedSize(520, 480);
     //scene = new PaintScene(0, 0, 510, 470, globParams, this);
-    scene = new PaintScene(globParams);
+    scene = new PaintScene(globParams, shapesCreator);
     view = new QGraphicsView(scene);
     view->setCursor(Qt::ArrowCursor);
     view->setRenderHint(QPainter::Antialiasing);
@@ -37,7 +37,8 @@ void Paint::initUi()
     globParams->setCurrentPenColor(Qt::green);
     globParams->setCurrentPenWidth(5);
     //scene->setShapeToDraw(std::make_shared<Line>());
-    scene->setShapeToDraw(std::make_shared<Rectangle>());
+    //scene->setShapeToDraw(std::make_shared<Rectangle>());
+    scene->setShapeToDraw("line");
 
     QSlider *lineWidth = new QSlider(Qt::Horizontal, this);
     lineWidth->setRange(0, 10);

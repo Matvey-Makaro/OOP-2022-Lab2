@@ -2,6 +2,7 @@
 
 #include "globparams.h"
 #include "shape.h"
+#include "shapescreator.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
@@ -11,9 +12,10 @@
 class PaintScene : public QGraphicsScene
 {
 public:
-    PaintScene(GlobParams* globParams);
+    PaintScene(GlobParams* globParams, ShapesCreator* shapesCreator);
     PaintScene(qreal x, qreal y, qreal width, qreal height, GlobParams* globParams);
-    void setShapeToDraw(std::shared_ptr<Shape> shape) { shapeToDraw = shape; }
+    //void setShapeToDraw(std::shared_ptr<Shape> shape) { shapeToDraw = shape; }
+    void setShapeToDraw(const QString& shapeName) { shapeToDraw = shapeName; }
 
 public slots:
     void undo();
@@ -26,9 +28,11 @@ protected:
 
 private:
     GlobParams* globParams;
-    std::shared_ptr<Shape> shapeToDraw;
-    std::shared_ptr<Shape> tmpShape;
-    std::vector<std::shared_ptr<Shape>> allShapes;
+    ShapesCreator* shapesCreator;
+    QString shapeToDraw;
+    //std::shared_ptr<Shape> shapeToDraw;
+    Shape* tmpShape;
+    std::vector<Shape*> allShapes;
     std::vector<Shape*> undoList;
     std::vector<Shape*> redoList;
 };

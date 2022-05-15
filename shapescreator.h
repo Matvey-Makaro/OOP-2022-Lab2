@@ -1,17 +1,18 @@
 #pragma once
 
+#include "shape.h"
+
 #include <dlfcn.h>
 #include <string>
 #include <map>
 
-#include "shape.h"
 
 typedef Shape *(* ShapeCreator)();
 
 class ShapesCreator
 {
 public:
-    ShapesCreator(std::string shapesDirPath);
+    ShapesCreator(const std::string& shapesDirPath);
     ~ShapesCreator();
 
     Shape *createShape(std::string shapeName);

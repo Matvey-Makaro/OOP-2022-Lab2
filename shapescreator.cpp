@@ -2,19 +2,22 @@
 
 #include <iostream>
 #include <filesystem>
+#include <QDebug>
 
-ShapesCreator::ShapesCreator(std::string shapesDirPath)
+ShapesCreator::ShapesCreator(const std::string& shapesDirPath)
 {
     namespace fs = std::filesystem;
 
     for (const auto & entry : fs::directory_iterator(shapesDirPath))
     {
         std::string path = entry.path();
-        std::cout << "loading " << path << "\n";
+        //std::cout << "loading " << path << "\n";
+        qDebug() << "loading " << path.c_str() << "\n";
         this->dlls[path] = dlopen(path.c_str(), RTLD_NOW | RTLD_LAZY);
 
         if (!this->dlls[path])
         {
+            qDebug() << "Can't open lib " << path.c_str() << "\n";
             this->dlls.erase(path);
             continue;
         }
@@ -47,5 +50,6 @@ ShapesCreator::~ShapesCreator()
 
 Shape* ShapesCreator::createShape(std::string shapeName)
 {
+    qDebug() << "Create shape: " << shapeName.c_str() << "\n";
     return shapes[shapeName]();
 }

@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    line.cpp
+    line.cpp \
+    ../shape.cpp
 
 HEADERS += \
-    Line_global.h \
-    line.h
+    line_global.h \
+    line.h \
+    ../shape.h
 
 
 # Default rules for deployment.

@@ -12,6 +12,7 @@ class Shape : public QObject, public QGraphicsItem
 public:
     Shape(GlobParams* globParams, QPointF globalStartPoint, QObject* parent = 0);
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0) = 0;
+    virtual QRectF boundingRect() const override;
     virtual QString getName() const = 0;
     virtual std::shared_ptr<Shape> clone(QPointF point) const = 0;
 
@@ -23,7 +24,8 @@ public:
 
 
 protected:
-    virtual void updateShape() = 0;
+    void updateShape();
+    virtual QRectF getBoundingRect() const = 0;
 
 protected:
     GlobParams *globParams;

@@ -21,6 +21,7 @@ SOURCES += \
     main.cpp \
     paint.cpp \
     paintscene.cpp \
+    rectangle.cpp \
     shape.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     line.h \
     paint.h \
     paintscene.h \
+    rectangle.h \
     shape.h
 
 # Default rules for deployment.

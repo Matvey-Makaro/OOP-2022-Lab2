@@ -12,6 +12,8 @@ Shape::Shape(GlobParams *globParams, QPointF globalStartPoint, QObject *parent):
     brushColor = globParams->getCurrentBrushColor();
 }
 
+QRectF Shape::boundingRect() const { return getBoundingRect(); }
+
 QPointF Shape::getStartPoint() const
 {
     return startPoint;
@@ -36,4 +38,9 @@ void Shape::setEndPoint(const QPointF& value)
     endPoint = value;
     qDebug() << "setEndPoint value: " << endPoint << '\n';
     updateShape();
+}
+
+void Shape::updateShape()
+{
+    update(getBoundingRect());
 }

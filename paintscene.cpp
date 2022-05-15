@@ -14,6 +14,38 @@ PaintScene::PaintScene(qreal x, qreal y, qreal width, qreal height, GlobParams *
 
 }
 
+void PaintScene::undo()
+{
+    qDebug() << "Undo.\n";
+    if(!undoList.empty())
+    {
+        Shape* item = undoList.back();
+        undoList.pop_back();
+        if(items().contains(item))
+            removeItem(item);
+        else
+            addItem(item);
+        redoList.push_back(item);
+        update(0, 0, width(), height());
+    }
+}
+
+void PaintScene::redo()
+{
+    qDebug() << "Redo.\n";
+    if(!redoList.empty())
+    {
+        Shape* item = redoList.back();
+        redoList.pop_back();
+        if(items().contains(item))
+            removeItem(item);
+        else
+            addItem(item);
+        undoList.push_back(item);
+        update(0, 0, width(), height());
+    }
+}
+
 void PaintScene::mousePressEvent(QGraphicsSceneMouseEvent * event)
 {
     qDebug() << "Mouse press event.\n";
@@ -25,6 +57,7 @@ void PaintScene::mousePressEvent(QGraphicsSceneMouseEvent * event)
         tmpShape->setStartPoint(event->scenePos());
         tmpShape ->setEndPoint(event->scenePos());
         addItem(tmpShape.get());
+        undoList.push_back(tmpShape.get());
         update(0, 0, width(), height());
         qDebug() << tmpShape->getName() << '\n';
     }
@@ -50,5 +83,6 @@ void PaintScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         tmpShape->setEndPoint(event->scenePos());
         update(0, 0, width(), height());
         allShapes.push_back(tmpShape);
+        redoList.clear();
     }
 }

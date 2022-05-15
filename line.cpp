@@ -1,7 +1,6 @@
 #include "line.h"
 
 #include <QPen>
-#include <qmath.h>
 #include <memory>
 
 
@@ -18,16 +17,9 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 }
 
-QRectF Line::boundingRect() const { return getBoundingRect(); }
-
 std::shared_ptr<Shape> Line::clone(QPointF point) const
 {
     return std::make_shared<Line>(globParams, point);
-}
-
-void Line::updateShape()
-{
-    update(getBoundingRect());
 }
 
 QRectF Line::getBoundingRect() const

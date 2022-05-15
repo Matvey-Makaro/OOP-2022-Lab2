@@ -1,8 +1,10 @@
 #include "paint.h"
 #include "line.h"
+#include "rectangle.h"
 
 #include <QGridLayout>
 #include <QtWidgets>
+#include <QShortcut>
 #include <memory>
 
 Paint::Paint(QWidget *parent)
@@ -34,7 +36,8 @@ void Paint::initUi()
     globParams->setCurrentBrushColor(Qt::green);
     globParams->setCurrentPenColor(Qt::green);
     globParams->setCurrentPenWidth(5);
-    scene->setShapeToDraw(std::make_shared<Line>(globParams, QPointF(100, 100)));
+    //scene->setShapeToDraw(std::make_shared<Line>(globParams, QPointF(100, 100)));
+    scene->setShapeToDraw(std::make_shared<Rectangle>(globParams, QPointF(100, 100)));
 
     QSlider *lineWidth = new QSlider(Qt::Horizontal, this);
     lineWidth->setRange(0, 10);
@@ -49,6 +52,11 @@ void Paint::initUi()
     brushColorButton->setText("Select brush color");
     connect(brushColorButton, &QPushButton::clicked, this, &Paint::selectBrushColor);
 
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z), this),
+            &QShortcut::activated, scene, &PaintScene::undo);
+
+    connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y), this),
+            &QShortcut::activated, scene, &PaintScene::redo);
 
     auto rect = scene->addRect(0, 0, 120, 120);
     rect->setFlags(QGraphicsItem::ItemIsMovable);

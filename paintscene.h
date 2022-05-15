@@ -14,6 +14,11 @@ public:
     PaintScene(GlobParams* globParams);
     PaintScene(qreal x, qreal y, qreal width, qreal height, GlobParams* globParams);
     void setShapeToDraw(std::shared_ptr<Shape> shape) { shapeToDraw = shape; }
+
+public slots:
+    void undo();
+    void redo();
+
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * event) override;
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
@@ -24,5 +29,7 @@ private:
     std::shared_ptr<Shape> shapeToDraw;
     std::shared_ptr<Shape> tmpShape;
     std::vector<std::shared_ptr<Shape>> allShapes;
+    std::vector<Shape*> undoList;
+    std::vector<Shape*> redoList;
 };
 

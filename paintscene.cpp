@@ -1,6 +1,12 @@
 #include "paintscene.h"
+#include "shapeslistserializer.h"
+#include "json.hpp"
 
 #include <QDebug>
+#include <algorithm>
+#include <QList>
+#include <iostream>
+#include <fstream>
 
 PaintScene::PaintScene(GlobParams *globParams, ShapesCreator* shapesCreator) :
     globParams(globParams), shapesCreator(shapesCreator)
@@ -22,9 +28,15 @@ void PaintScene::undo()
         Shape* item = undoList.back();
         undoList.pop_back();
         if(items().contains(item))
+        {
             removeItem(item);
+            //allShapes.erase(std::find(allShapes.begin(), allShapes.end(), item));
+        }
         else
+        {
             addItem(item);
+            //allShapes.push_back(item);
+        }
         redoList.push_back(item);
     }
     update(0, 0, width(), height());
@@ -38,12 +50,72 @@ void PaintScene::redo()
         Shape* item = redoList.back();
         redoList.pop_back();
         if(items().contains(item))
+        {
             removeItem(item);
+            //allShapes.erase(std::find(allShapes.begin(), allShapes.end(), item));
+        }
         else
+        {
             addItem(item);
+            //allShapes.push_back(item);
+        }
         undoList.push_back(item);
     }
     update(0, 0, width(), height());
+}
+
+void PaintScene::serializeDrawnShapesList()
+{
+    qDebug() << "Serialize drawn shape list.\n";
+    QList<Shape*> shapesList;
+    QList<QGraphicsItem*> graphicsItems = items();
+    for(auto item : graphicsItems)
+        shapesList.append(dynamic_cast<Shape*>(item));
+    dumpShapesListToFile(shapesList, "json_shapes.json");
+}
+
+void PaintScene::deserializeDrawnShapesList()
+{
+    qDebug() << "Deserialize drawn shapes list.\n";
+    clear();
+    QString fileName = "json_shapes.json";
+    using json = nlohmann::json;
+    std::ifstream in(fileName.toStdString());
+    json shapesArray = json::parse(readAllText(in));
+
+    if (shapesArray.is_null())
+    {
+        return;
+    }
+
+    for (int i = 0; i < shapesArray.size(); i++)
+    {
+        json currShapeJson = shapesArray[i];
+
+        Shape *s = shapesCreator->createShape(currShapeJson["name"]);
+        addItem(s);
+        std::cout << currShapeJson["name"] << "\n";
+        std::vector<QPointF> shapePoints;
+
+        for (int j = 0; j < currShapeJson["points"].size(); j++)
+        {
+            json currPointJson = currShapeJson["points"][j];
+            shapePoints.push_back(QPointF(currPointJson[0], currPointJson[1]));
+        }
+        s->setPoints(shapePoints);
+        json startPoint = currShapeJson["startPoint"];
+        s->setStartPoint(QPointF(startPoint[0], startPoint[1]));
+        json endPoint = currShapeJson["endPoint"];
+        s->setEndPoint(QPointF(endPoint[0], endPoint[1]));
+
+        s->setPoints(shapePoints);
+        s->setPenWidth(currShapeJson["penWidth"]);
+
+        json colorJson = currShapeJson["penColor"];
+        s->setPenColor(QColor(colorJson[0], colorJson[1], colorJson[2]));
+        colorJson = currShapeJson["brushColor"];
+        s->setBrushColor(QColor(colorJson[0], colorJson[1], colorJson[2]));
+    }
 }
 
 void PaintScene::mousePressEvent(QGraphicsSceneMouseEvent * event)
@@ -94,7 +166,7 @@ void PaintScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         tmpShape->addPoint(event->scenePos());
         if(!tmpShape->isDrawnInTwoClicks())
         {
-            allShapes.push_back(tmpShape);
+            //allShapes.push_back(tmpShape);
         }
         else
         {
@@ -112,7 +184,7 @@ void PaintScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if(!tmpShape->isDrawnInTwoClicks())
         {
-            allShapes.push_back(tmpShape);
+            //allShapes.push_back(tmpShape);
             tmpShape->setIsCompleted(true);
         }
     }

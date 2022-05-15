@@ -35,6 +35,7 @@ public:
     void setPenWidth(int value);
 
     std::vector<QPointF>& getPoints();
+    void setPoints(const std::vector<QPointF> &value);
     void addPoint(QPointF point);
 
 

@@ -61,8 +61,8 @@ void Paint::initUi()
     connect(new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Y), this),
             &QShortcut::activated, scene, &PaintScene::redo);
 
-    auto rect = scene->addRect(0, 0, 120, 120);
-    rect->setFlags(QGraphicsItem::ItemIsMovable);
+    //auto rect = scene->addRect(0, 0, 120, 120);
+    //rect->setFlags(QGraphicsItem::ItemIsMovable);
 
     QPushButton* lineBtn = new QPushButton("Line");
     QComboBox *shapesList = new QComboBox(this);
@@ -70,12 +70,24 @@ void Paint::initUi()
     shapesList->addItems(shapesNames);
     connect(shapesList, &QComboBox::currentTextChanged, this, &Paint::updateCurrentShape);
 
+    QPushButton* moveBtn = new QPushButton("move", this);
+    connect(moveBtn, &QPushButton::clicked, this, &Paint::moveBtnClicked);
+
+    QPushButton* saveBtn = new QPushButton("save", this);
+    connect(saveBtn, &QPushButton::clicked, scene, &PaintScene::serializeDrawnShapesList);
+
+    QPushButton* loadBtn = new QPushButton("load", this);
+    connect(loadBtn, &QPushButton::clicked, scene, &PaintScene::deserializeDrawnShapesList);
+
     QGridLayout* gridLayout = new QGridLayout(this);
     gridLayout->addWidget(view, 2, 0, 10, 10);
     gridLayout->addWidget(penColorButton, 0, 0, 1, 1);
     gridLayout->addWidget(brushColorButton, 1, 0, 1, 1);
     gridLayout->addWidget(lineWidth, 0, 1, 1, 1);
     gridLayout->addWidget(shapesList, 0, 11, 2, 1);
+    gridLayout->addWidget(moveBtn, 2, 11, 1, 1);
+    gridLayout->addWidget(saveBtn, 4, 11, 1, 1);
+    gridLayout->addWidget(loadBtn, 6, 11, 1, 1);
     gridLayout->addWidget(lineBtn, 11, 11);
     setLayout(gridLayout);
 }
@@ -101,4 +113,10 @@ void Paint::updateCurrentShape(QString currShape)
 {
     qDebug() << "Update current shape. New shape: " << currShape << '\n';
     scene->setShapeToDraw(currShape);
+    globParams->setDrawAction();
+}
+
+void Paint::moveBtnClicked()
+{
+    globParams->setMoveAction();
 }

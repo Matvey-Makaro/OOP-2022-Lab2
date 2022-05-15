@@ -24,17 +24,20 @@ SOURCES += \
     polygon.cpp \
     rectangle.cpp \
     shape.cpp \
-    shapescreator.cpp
+    shapescreator.cpp \
+    shapeslistserializer.cpp
 
 HEADERS += \
     globparams.h \
+    json.hpp \
     line.h \
     paint.h \
     paintscene.h \
     polygon.h \
     rectangle.h \
     shape.h \
-    shapescreator.h
+    shapescreator.h \
+    shapeslistserializer.h
 
 LIBS += -ldl
 

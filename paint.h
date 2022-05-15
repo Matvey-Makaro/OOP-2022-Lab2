@@ -32,6 +32,7 @@ protected slots:
     void selectPenColor() {  globParams->setCurrentPenColor(getColorFromUser()); }
     void selectBrushColor() { globParams->setCurrentBrushColor(getColorFromUser()); }
     void updateCurrentShape(QString currShape);
+    void moveBtnClicked();
 
 private:
     PaintScene* scene;  // add delete scene

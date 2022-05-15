@@ -11,9 +11,17 @@ void GlobParams::setDrawAction()
     drawFlag = true;
 }
 
+void GlobParams::setMoveAction()
+{
+    setAllFlagsFalse();
+    moveFlag = true;
+}
+
 void GlobParams::setAllFlagsFalse()
 {
     // TODO: делать сделть все флаги равными false
+    drawFlag = false;
+    moveFlag = false;
 }
 
 int GlobParams::getCurrentPenWidth() const

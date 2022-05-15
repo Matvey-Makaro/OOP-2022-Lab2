@@ -12,6 +12,9 @@ public:
     bool isDrawAction() const { return drawFlag; }
     void setDrawAction();
 
+    bool isMoveAction() const { return moveFlag; }
+    void setMoveAction();
+
     QColor getCurrentPenColor() const;
     void setCurrentPenColor(const QColor &value);
 
@@ -25,6 +28,7 @@ private:
     void setAllFlagsFalse();
 private:
     bool drawFlag = false;
+    bool moveFlag = false;
 
     QColor currentPenColor;
     QColor currentBrushColor;

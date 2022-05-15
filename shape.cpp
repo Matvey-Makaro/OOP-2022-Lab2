@@ -3,7 +3,9 @@
 #include <QDebug>
 
 Shape::Shape()
-{ }
+{
+   setFlags(QGraphicsItem::ItemIsMovable);
+}
 
 QRectF Shape::boundingRect() const { return getBoundingRect(); }
 
@@ -61,6 +63,11 @@ void Shape::setPenWidth(int value)
 std::vector<QPointF>& Shape::getPoints()
 {
     return points;
+}
+
+void Shape::setPoints(const std::vector<QPointF> &value)
+{
+    points = value;
 }
 
 void Shape::addPoint(QPointF point)

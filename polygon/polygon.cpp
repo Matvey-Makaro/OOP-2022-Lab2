@@ -20,8 +20,8 @@ void Polygon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
 QRectF Polygon::getBoundingRect() const
 {
-    //return scene()->sceneRect();
-    return QRectF(0,0,0,0);
+    return scene()->sceneRect();
+    //return QRectF(0,0,0,0);
 }
 
 extern "C" Shape* createShape()

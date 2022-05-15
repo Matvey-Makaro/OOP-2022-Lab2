@@ -20,6 +20,8 @@ public:
 public slots:
     void undo();
     void redo();
+    void serializeDrawnShapesList();
+    void deserializeDrawnShapesList();
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent * event) override;

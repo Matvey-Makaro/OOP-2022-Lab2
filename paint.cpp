@@ -35,11 +35,36 @@ void Paint::initUi()
     globParams->setCurrentPenColor(Qt::green);
     globParams->setCurrentPenWidth(5);
     scene->setShapeToDraw(std::make_shared<Line>(globParams, QPointF(100, 100)));
+
+    QSlider *lineWidth = new QSlider(Qt::Horizontal, this);
+    lineWidth->setRange(0, 10);
+    lineWidth->setTickInterval(1);
+    connect(lineWidth, &QSlider::valueChanged, this, &Paint::updateLineWidth);
+
+    QPushButton *penColorButton = new QPushButton(this);
+    penColorButton->setText("Select pen color");
+    connect(penColorButton, &QPushButton::clicked, this, &Paint::selectPenColor);
+
+    QPushButton *brushColorButton = new QPushButton(this);
+    brushColorButton->setText("Select brush color");
+    connect(brushColorButton, &QPushButton::clicked, this, &Paint::selectBrushColor);
+
+
     auto rect = scene->addRect(0, 0, 120, 120);
     rect->setFlags(QGraphicsItem::ItemIsMovable);
-    QGridLayout* gridLayout = new QGridLayout(this);
-    gridLayout->addWidget(view, 0, 0, 10, 10);
+
     QPushButton* lineBtn = new QPushButton("Line");
+    QComboBox *shapesList = new QComboBox(this);
+    shapesNames << "line" << "square";
+    shapesList->addItems(shapesNames);
+    connect(shapesList, &QComboBox::currentTextChanged, this, &Paint::updateCurrentShape);
+
+    QGridLayout* gridLayout = new QGridLayout(this);
+    gridLayout->addWidget(view, 2, 0, 10, 10);
+    gridLayout->addWidget(penColorButton, 0, 0, 1, 1);
+    gridLayout->addWidget(brushColorButton, 1, 0, 1, 1);
+    gridLayout->addWidget(lineWidth, 0, 1, 1, 1);
+    gridLayout->addWidget(shapesList, 0, 11, 2, 1);
     gridLayout->addWidget(lineBtn, 11, 11);
     setLayout(gridLayout);
 }
@@ -49,8 +74,19 @@ void Paint::resizeEvent(QResizeEvent *event)
     scene->setSceneRect(0,0, view->width(), view->height());
 }
 
-void Paint::timerSlot()
+QColor Paint::getColorFromUser() const
 {
-    timer->stop();
+    QColorDialog dialog;
+    QColor color = dialog.getColor();
+    return color;
+}
 
+void Paint::updateLineWidth(int value)
+{
+    globParams->setCurrentPenWidth(value);
+}
+
+void Paint::updateCurrentShape(QString currShape)
+{
+    qDebug() << "Update current shape. New shape: " << currShape << '\n';
 }

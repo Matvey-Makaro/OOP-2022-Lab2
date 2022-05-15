@@ -10,6 +10,8 @@
 #include <QAbstractGraphicsShapeItem>
 #include <QGraphicsRectItem>
 #include <QTimer>
+#include <QString>
+#include <QStringList>
 
 class Paint : public QWidget
 {
@@ -22,13 +24,21 @@ public:
 private:
     void initUi();
     void resizeEvent(QResizeEvent * event);
+    QColor getColorFromUser() const;
+
+protected slots:
+    void updateLineWidth(int value);
+    void selectPenColor() {  globParams->setCurrentPenColor(getColorFromUser()); }
+    void selectBrushColor() { globParams->setCurrentBrushColor(getColorFromUser()); }
+    void updateCurrentShape(QString currShape);
 
 private slots:
-    void timerSlot();
+    //void timerSlot();   // UNUSED
 
 private:
     PaintScene* scene;
     QGraphicsView* view;
     GlobParams* globParams;
-    QTimer *timer;
+    QTimer *timer;  // UNUSED
+    QStringList shapesNames;
 };

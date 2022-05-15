@@ -100,7 +100,6 @@ void PaintScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         {
             tmpShape->setIsCompleted(true);
         }
-
         update(0, 0, width(), height());
         redoList.clear();
     }

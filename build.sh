@@ -4,7 +4,7 @@ mkdir build/shapes
 cd build/
 
 declare -a shapes_names
-shapes_names=(line)
+shapes_names=(line lines ellipse polygon rectangle)
 
 for shape_name in "${shapes_names[@]}"
 do

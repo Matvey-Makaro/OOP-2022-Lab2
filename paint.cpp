@@ -40,7 +40,7 @@ void Paint::initUi()
     globParams->setCurrentPenWidth(5);
     //scene->setShapeToDraw(std::make_shared<Line>());
     //scene->setShapeToDraw(std::make_shared<Rectangle>());
-    scene->setShapeToDraw("polygon");
+    scene->setShapeToDraw("lines");
 
     QSlider *lineWidth = new QSlider(Qt::Horizontal, this);
     lineWidth->setRange(0, 10);
@@ -64,7 +64,6 @@ void Paint::initUi()
     //auto rect = scene->addRect(0, 0, 120, 120);
     //rect->setFlags(QGraphicsItem::ItemIsMovable);
 
-    QPushButton* lineBtn = new QPushButton("Line");
     QComboBox *shapesList = new QComboBox(this);
     //shapesNames << "line" << "square";    //Delete
     shapesList->addItems(shapesNames);
@@ -88,7 +87,6 @@ void Paint::initUi()
     gridLayout->addWidget(moveBtn, 2, 11, 1, 1);
     gridLayout->addWidget(saveBtn, 4, 11, 1, 1);
     gridLayout->addWidget(loadBtn, 6, 11, 1, 1);
-    gridLayout->addWidget(lineBtn, 11, 11);
     setLayout(gridLayout);
 }
 

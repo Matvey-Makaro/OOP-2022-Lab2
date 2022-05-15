@@ -116,6 +116,8 @@ void PaintScene::deserializeDrawnShapesList()
         colorJson = currShapeJson["brushColor"];
         s->setBrushColor(QColor(colorJson[0], colorJson[1], colorJson[2]));
     }
+    undoList.clear();
+    redoList.clear();
 }
 
 void PaintScene::mousePressEvent(QGraphicsSceneMouseEvent * event)

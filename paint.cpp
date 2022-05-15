@@ -36,8 +36,8 @@ void Paint::initUi()
     globParams->setCurrentBrushColor(Qt::green);
     globParams->setCurrentPenColor(Qt::green);
     globParams->setCurrentPenWidth(5);
-    //scene->setShapeToDraw(std::make_shared<Line>(globParams, QPointF(100, 100)));
-    scene->setShapeToDraw(std::make_shared<Rectangle>(globParams, QPointF(100, 100)));
+    //scene->setShapeToDraw(std::make_shared<Line>());
+    scene->setShapeToDraw(std::make_shared<Rectangle>());
 
     QSlider *lineWidth = new QSlider(Qt::Horizontal, this);
     lineWidth->setRange(0, 10);

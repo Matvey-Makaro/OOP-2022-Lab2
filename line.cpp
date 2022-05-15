@@ -4,11 +4,8 @@
 #include <memory>
 
 
-Line::Line(GlobParams* globParams, QPointF globalStartPoint, QWidget* parent) :
-    Shape(globParams, globalStartPoint, parent)
-{
-
-}
+Line::Line()
+{ }
 
 void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -17,9 +14,9 @@ void Line::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 }
 
-std::shared_ptr<Shape> Line::clone(QPointF point) const
+std::shared_ptr<Shape> Line::clone() const
 {
-    return std::make_shared<Line>(globParams, point);
+    return std::make_shared<Line>();
 }
 
 QRectF Line::getBoundingRect() const

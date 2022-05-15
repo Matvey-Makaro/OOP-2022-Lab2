@@ -52,10 +52,13 @@ void PaintScene::mousePressEvent(QGraphicsSceneMouseEvent * event)
     if(globParams->isDrawAction())
     {
         qDebug() << "Mouse press event event->pos(): " << event->pos();
-        tmpShape = shapeToDraw->clone(event->scenePos());
+        tmpShape = shapeToDraw->clone();
         //tmpShape->setPos(event->pos());
         tmpShape->setStartPoint(event->scenePos());
         tmpShape ->setEndPoint(event->scenePos());
+        tmpShape->setPenColor(globParams->getCurrentPenColor());
+        tmpShape->setBrushColor(globParams->getCurrentBrushColor());
+        tmpShape->setPenWidth(globParams->getCurrentPenWidth());
         addItem(tmpShape.get());
         undoList.push_back(tmpShape.get());
         update(0, 0, width(), height());

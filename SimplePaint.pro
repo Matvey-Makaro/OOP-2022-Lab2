@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -34,12 +34,14 @@ HEADERS += \
     shape.h \
     shapescreator.h
 
+LIBS += -ldl
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-unix:!macx: LIBS += -L$$PWD/build-Line-Desktop-Debug/ -lLine
+# unix:!macx: LIBS += -L$$PWD/build-Line-Desktop-Debug/ -lLine
 
 # INCLUDEPATH += $$PWD/Line
 # $DEPENDPATH += $$PWD/Line

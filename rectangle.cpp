@@ -1,7 +1,6 @@
 #include "rectangle.h"
 
-Rectangle::Rectangle(GlobParams *globParams, QPointF globalStartPoint, QWidget *parent) :
-    Shape(globParams, globalStartPoint, parent)
+Rectangle::Rectangle()
 {
 
 }
@@ -16,9 +15,9 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                       qAbs(startPoint.y() - endPoint.y()));
 }
 
-std::shared_ptr<Shape> Rectangle::clone(QPointF point) const
+std::shared_ptr<Shape> Rectangle::clone() const
 {
-    return std::make_shared<Rectangle>(globParams, point);
+    return std::make_shared<Rectangle>();
 }
 
 QRectF Rectangle::getBoundingRect() const

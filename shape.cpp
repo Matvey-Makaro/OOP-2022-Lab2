@@ -2,15 +2,8 @@
 
 #include <QDebug>
 
-Shape::Shape(GlobParams *globParams, QPointF globalStartPoint, QObject *parent):
-    globParams(globParams), globalStartPoint(globalStartPoint), QObject(parent)
-{
-    // Использовать point
-    startPoint = endPoint = mapFromScene(globalStartPoint);
-    penColor = globParams->getCurrentPenColor();
-    penWidth = globParams->getCurrentPenWidth();
-    brushColor = globParams->getCurrentBrushColor();
-}
+Shape::Shape()
+{ }
 
 QRectF Shape::boundingRect() const { return getBoundingRect(); }
 
@@ -43,4 +36,34 @@ void Shape::setEndPoint(const QPointF& value)
 void Shape::updateShape()
 {
     update(getBoundingRect());
+}
+
+int Shape::getPenWidth() const
+{
+    return penWidth;
+}
+
+void Shape::setPenWidth(int value)
+{
+    penWidth = value;
+}
+
+QColor Shape::getBrushColor() const
+{
+    return brushColor;
+}
+
+void Shape::setBrushColor(const QColor &value)
+{
+    brushColor = value;
+}
+
+QColor Shape::getPenColor() const
+{
+    return penColor;
+}
+
+void Shape::setPenColor(const QColor &value)
+{
+    penColor = value;
 }

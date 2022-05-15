@@ -23,6 +23,7 @@ HEADERS += \
     Line_global.h \
     line.h
 
+
 # Default rules for deployment.
 unix {
     target.path = /usr/lib

@@ -15,7 +15,7 @@ public:
     PaintScene(GlobParams* globParams, ShapesCreator* shapesCreator);
     PaintScene(qreal x, qreal y, qreal width, qreal height, GlobParams* globParams);
     //void setShapeToDraw(std::shared_ptr<Shape> shape) { shapeToDraw = shape; }
-    void setShapeToDraw(const QString shapeName) { shapeToDraw = shapeName; }
+    void setShapeToDraw(const QString shapeName);
 
 public slots:
     void undo();

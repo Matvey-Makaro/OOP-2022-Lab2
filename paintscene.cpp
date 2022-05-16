@@ -1,6 +1,7 @@
 #include "paintscene.h"
 #include "shapeslistserializer.h"
 #include "json.hpp"
+#include "shape.h"
 
 #include <QDebug>
 #include <algorithm>
@@ -18,6 +19,16 @@ PaintScene::PaintScene(qreal x, qreal y, qreal width, qreal height, GlobParams *
     QGraphicsScene(x, y, width, height), globParams(globParams)
 {
 
+}
+
+void PaintScene::setShapeToDraw(const QString shapeName)
+{
+    shapeToDraw = shapeName;
+    if(tmpShape != nullptr)
+    {
+        tmpShape->setIsCompleted(true);
+        tmpShape = nullptr;
+    }
 }
 
 void PaintScene::undo()
@@ -88,6 +99,7 @@ void PaintScene::deserializeDrawnShapesList()
     using json = nlohmann::json;
     std::ifstream in(fileName.toStdString());
     json shapesArray = json::parse(readAllText(in));
+    in.close();
 
     if (shapesArray.is_null())
     {

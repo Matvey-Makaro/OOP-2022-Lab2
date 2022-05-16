@@ -1,7 +1,4 @@
 #include "paint.h"
-#include "line.h"
-#include "rectangle.h"
-#include "polygon.h"
 
 #include <QGridLayout>
 #include <QtWidgets>
@@ -23,7 +20,7 @@ Paint::~Paint()
 void Paint::initUi()
 {
     //resize(520, 480);
-    setFixedSize(520, 480);
+    setFixedSize(620, 680);
     //scene = new PaintScene(0, 0, 510, 470, globParams, this);
     scene = new PaintScene(globParams, shapesCreator);
     view = new QGraphicsView(scene);
@@ -69,8 +66,8 @@ void Paint::initUi()
     shapesList->addItems(shapesNames);
     connect(shapesList, &QComboBox::currentTextChanged, this, &Paint::updateCurrentShape);
 
-    QPushButton* moveBtn = new QPushButton("move", this);
-    connect(moveBtn, &QPushButton::clicked, this, &Paint::moveBtnClicked);
+//    QPushButton* moveBtn = new QPushButton("move", this);
+//    connect(moveBtn, &QPushButton::clicked, this, &Paint::moveBtnClicked);
 
     QPushButton* saveBtn = new QPushButton("save", this);
     connect(saveBtn, &QPushButton::clicked, scene, &PaintScene::serializeDrawnShapesList);
@@ -84,7 +81,7 @@ void Paint::initUi()
     gridLayout->addWidget(brushColorButton, 1, 0, 1, 1);
     gridLayout->addWidget(lineWidth, 0, 1, 1, 1);
     gridLayout->addWidget(shapesList, 0, 11, 2, 1);
-    gridLayout->addWidget(moveBtn, 2, 11, 1, 1);
+    //gridLayout->addWidget(moveBtn, 2, 11, 1, 1);
     gridLayout->addWidget(saveBtn, 4, 11, 1, 1);
     gridLayout->addWidget(loadBtn, 6, 11, 1, 1);
     setLayout(gridLayout);

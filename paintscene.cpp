@@ -70,7 +70,12 @@ void PaintScene::serializeDrawnShapesList()
     QList<Shape*> shapesList;
     QList<QGraphicsItem*> graphicsItems = items();
     for(auto item : graphicsItems)
-        shapesList.append(dynamic_cast<Shape*>(item));
+    {
+        Shape* tmp = dynamic_cast<Shape*>(item);
+        if (tmp != nullptr && tmp->getIsCompleted())
+            shapesList.append(tmp);
+    }
+
     dumpShapesListToFile(shapesList, "json_shapes.json");
 }
 
@@ -78,6 +83,7 @@ void PaintScene::deserializeDrawnShapesList()
 {
     qDebug() << "Deserialize drawn shapes list.\n";
     clear();
+    tmpShape = nullptr;
     QString fileName = "json_shapes.json";
     using json = nlohmann::json;
     std::ifstream in(fileName.toStdString());
